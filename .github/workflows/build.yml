@@ -1,13 +1,17 @@
-name: Build website
-run-name: ${{ github.actor }} is testing out the action!
-on: [push]
+name: Build and Deploy
+run-name: Build \#${{ github.run_id }} of ${{ github.ref }}
+on:
+  push:
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Test Cargo build
         run: cargo test
+
       - name: Run Cargo build
-        run: cargo build --verbose --release
+        run: cargo build --release
