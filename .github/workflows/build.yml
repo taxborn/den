@@ -1,0 +1,13 @@
+name: Build website
+run-name: ${{ github.actor }} is testing out the action!
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test Cargo build
+        run: cargo test
+      - name: Run Cargo build
+        run: cargo build --verbose --release
