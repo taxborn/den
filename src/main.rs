@@ -1,11 +1,10 @@
 mod router;
 
-use clap::{Parser, Subcommand};
+use clap::Parser;
 use hyper::server::conn::http1;
 use hyper::service::service_fn;
 use hyper_util::rt::TokioIo;
 use std::net::SocketAddr;
-use std::path::PathBuf;
 use tokio::net::TcpListener;
 
 #[derive(Parser)]

@@ -1,11 +1,16 @@
+# Build Workflow
+# This workflow should test, build, and deploy my website
+
 name: Build and Deploy
-run-name: Build \#${{ github.run_id }} of ${{ github.ref }}
+run-name: Build #${{ github.run_number }} of ${{ github.ref }}
 on:
   push:
     branches: [main]
 
 jobs:
-  build:
+  # Testing
+  # - cargo test
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -13,5 +18,13 @@ jobs:
       - name: Test Cargo build
         run: cargo test
 
-      - name: Run Cargo build
+  # Build and Deploy
+  # cargo build with release mode
+  # TODO: - build profile settings for quick compilations
+  #       - Deploy
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      #
+      - name: Build
         run: cargo build --release
