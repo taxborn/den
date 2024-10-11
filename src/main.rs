@@ -25,21 +25,15 @@ fn app() -> Router {
         .route("/", get(index))
         .layer(
             TraceLayer::new_for_http().make_span_with(|request: &Request<_>| {
-                let matched_path = request
-                    .extensions()
-                    .get::<MatchedPath>()
-                    .map(MatchedPath::as_str);
-
-                info_span!("http_request", method = ?request.method(), matched_path,some_other_field = tracing::field::Empty)
+                info_span!("http_request", method = ?request.method(), uri = tracing::field::Empty)
             })
             .on_request(|_request: &Request<_>, _span: &Span| {
-                // You can use `_span.record("some_other_field", value)` in one of these
-                // closures to attach a value to the initially empty field in the info_span
-                // created above.
-                tracing::info!("request happened. {:?}", _request);
+                _span.record("uri", _request.uri().to_string());
+                tracing::info!("request happened!!");
             })
             .on_response(|_response: &Response, _latency: Duration, _span: &Span| {
                 // ...
+                tracing::info!("response happened!!");
             })
             .on_body_chunk(|_chunk: &Bytes, _latency: Duration, _span: &Span| {
                 // ...
@@ -51,7 +45,7 @@ fn app() -> Router {
             )
             .on_failure(
                 |_error: ServerErrorsFailureClass, _latency: Duration, _span: &Span| {
-                    // ...
+                    tracing::info!("idk bro {:?}", _error);
                 },
             )
         )
@@ -89,5 +83,6 @@ async fn main() {
 }
 
 async fn index() -> Html<&'static str> {
+    tracing::info!("loaded template index");
     Html(std::include_str!("../site/pages/index.html"))
 }

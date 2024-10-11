@@ -9,3 +9,11 @@ but I've always wondered what it would be like to write my own website generator
 - Use GitHub CI to deploy
 - CSP security, passes Google Lighthouse checks
 - Parses Markdown with frontmatter
+
+# Deployments
+*This is not setup yet*
+
+For now, while developing this, there will be two subdomains under taxborn.com
+
+- [den.taxborn.com](https://den.taxborn.com) - the **main** branch
+- [den-next.taxborn.com](https://den-next.taxborn.com) - the **next** branch
